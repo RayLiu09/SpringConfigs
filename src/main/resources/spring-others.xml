@@ -1,0 +1,11 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="databaseProperties" class="com.example.demo.DatabaseProperties">
+        <property name="driverName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://192.168.1.182:3306/aigc_base"/>
+        <property name="username" value="mysql"/>
+        <property name="password" value="MySQL_2024"/>
+    </bean>
+</beans>
