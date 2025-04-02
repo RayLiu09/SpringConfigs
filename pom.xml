@@ -11,8 +11,11 @@
 	<groupId>com.example</groupId>
 	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>BaseSettings</name>
 	<description>Demo project for Spring Boot</description>
+	<organization>
+	</organization>
 	<url/>
 	<licenses>
 		<license/>
@@ -154,6 +157,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>jakarta.websocket</groupId>-->
+<!--			<artifactId>jakarta.websocket-api</artifactId>-->
+<!--			<version>2.1.0</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.apache.tomcat.embed</groupId>-->
+<!--			<artifactId>tomcat-embed-websocket</artifactId>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -165,6 +177,14 @@
 			<artifactId>mybatis-spring-boot-starter-test</artifactId>
 			<version>3.0.4</version>
 			<scope>test</scope>
+		</dependency>
+
+		<!-- 热部署 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<!-- 表示依赖不会传递 -->
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 

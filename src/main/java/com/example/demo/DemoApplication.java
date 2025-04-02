@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 @SpringBootApplication(scanBasePackages = {"com.example.demo"})
 @PropertySources({
@@ -22,9 +23,10 @@ import org.springframework.transaction.PlatformTransactionManager;
 		@PropertySource("classpath:application-logging.properties"),
 		@PropertySource("classpath:application.rabbitmq.properties")
 })
-@MapperScan(value = "com.example.demo.repositories", sqlSessionFactoryRef = "sqlSessionFactory", annotationClass = Repository.class)
+@MapperScan(value = "com.example.demo.repositories", sqlSessionFactoryRef = "sqlSessionFactory")
 @EnableWebSecurity
 @EnableScheduling
+@EnableWebSocket
 public class DemoApplication {
 
 	public static void main(String[] args) {

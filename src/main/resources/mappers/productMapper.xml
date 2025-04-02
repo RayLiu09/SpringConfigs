@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.repositories.ProductRepository">
+    <!-- 查询所有商品 -->
+    <select id="findAll" resultType="com.example.demo.models.ProductModel">
+        SELECT * FROM T_PRODUCT
+    </select>
+    <!-- 根据id查询商品 -->
+    <select id="findById" parameterType="long" resultType="product">
+        SELECT * FROM T_PRODUCT WHERE ID = #{id}
+    </select>
+    <!-- 减少库存 -->
+    <update id="reduceStock" parameterType="int">
+        UPDATE T_PRODUCT SET STOCK = STOCK - #{quantity} WHERE ID = #{id}
+    </update>
+</mapper>

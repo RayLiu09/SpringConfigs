@@ -17,7 +17,7 @@ public class DataSourceConfig {
     public DataSource getDataSource() {
         Properties properties = new Properties();
         properties.setProperty("driverClassName", "com.mysql.cj.jdbc.Driver");
-        properties.setProperty("url", "jdbc:mysql://192.168.1.182:3306/aigc_base");
+        properties.setProperty("url", "jdbc:mysql://192.168.1.182:3306/sales");
         properties.setProperty("username", "mysql");
         properties.setProperty("password", "MySQL_2024");
         DataSource dataSource = null;

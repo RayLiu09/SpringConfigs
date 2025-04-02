@@ -3,7 +3,7 @@ package com.example.demo.entities;
 import jakarta.persistence.*;
 
 @Entity(name = "book")
-@Table(name = "book")
+@Table(name = "T_BOOK")
 public class BookEntity {
     // 标明ID，主键策略
     @Id
