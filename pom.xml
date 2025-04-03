@@ -75,7 +75,24 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- 排除 tomcat 的引入 -->
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--					<groupId>org.springframework.boot</groupId>-->
+<!--					<artifactId>spring-boot-starter-tomcat</artifactId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
 		</dependency>
+		<!-- 引入内嵌的Undertow -->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-undertow</artifactId>-->
+<!--		</dependency>-->
+		<!-- 引入内嵌的Jetty -->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-jetty</artifactId>-->
+<!--		</dependency>-->
 		<!-- 配置MyBatis依赖 -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
@@ -157,14 +174,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>jakarta.websocket</groupId>
+			<artifactId>jakarta.websocket-api</artifactId>
+			<version>2.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-websocket</artifactId>
+		</dependency>
 <!--		<dependency>-->
-<!--			<groupId>jakarta.websocket</groupId>-->
-<!--			<artifactId>jakarta.websocket-api</artifactId>-->
-<!--			<version>2.1.0</version>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.apache.tomcat.embed</groupId>-->
-<!--			<artifactId>tomcat-embed-websocket</artifactId>-->
+<!--			<groupId>io.undertow</groupId>-->
+<!--			<artifactId>undertow-websockets-jsr</artifactId>-->
 <!--		</dependency>-->
 
 		<dependency>
