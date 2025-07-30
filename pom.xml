@@ -42,57 +42,73 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<!-- 当使用DBCP2时，需要排除默认引入的HikariCP -->
+			<exclusions>
+				<!-- 默认引入的HikariCP -->
+				<exclusion>
+					<groupId>com.zaxxer</groupId>
+					<artifactId>HikariCP</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>com.h2database</groupId>-->
-<!--			<artifactId>h2</artifactId>-->
-<!--			<scope>runtime</scope>-->
-<!--		</dependency>-->
+		<!--		<dependency>-->
+		<!--			<groupId>com.h2database</groupId>-->
+		<!--			<artifactId>h2</artifactId>-->
+		<!--			<scope>runtime</scope>-->
+		<!--		</dependency>-->
 		<!--配置自定义数据源MySQL依赖-->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.33</version>
+			<scope>runtime</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-jdbc</artifactId>-->
-<!--		</dependency>-->
+		<!--		<dependency>-->
+		<!--			<groupId>org.springframework.boot</groupId>-->
+		<!--			<artifactId>spring-boot-starter-jdbc</artifactId>-->
+		<!--		</dependency>-->
 		<!-- 配置Druid数据源 -->
+		<!-- Spring boot 2.x依赖的Druid -->
+<!--		<dependency>-->
+<!--			<groupId>com.alibaba</groupId>-->
+<!--			<artifactId>druid-spring-boot-starter</artifactId>-->
+<!--			<version>1.2.23</version>-->
+<!--		</dependency>-->
+		<!-- Spring boot 3.x依赖的Druid -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
-			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>1.2.23</version>
+			<artifactId>druid-spring-boot-3-starter</artifactId>
+			<version>1.2.20</version>
 		</dependency>
 		<!-- 配置第三方数据源，而不是Spring Boot自带的Tomcat数据源， 如DBCP2数据源,DBCP2.5.0支持Java 8及以上，
-		基于Apache Commons Pool -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-dbcp2</artifactId>
-			<version>2.9.0</version>
-		</dependency>
+		基于Apache Commons Pool, 此时需要从jpa中排除HikariCP -->
+		<!--		<dependency>-->
+		<!--			<groupId>org.apache.commons</groupId>-->
+		<!--			<artifactId>commons-dbcp2</artifactId>-->
+		<!--			<version>2.9.0</version>-->
+		<!--		</dependency>-->
 		<!-- 配置web-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<!-- 排除 tomcat 的引入 -->
-<!--			<exclusions>-->
-<!--				<exclusion>-->
-<!--					<groupId>org.springframework.boot</groupId>-->
-<!--					<artifactId>spring-boot-starter-tomcat</artifactId>-->
-<!--				</exclusion>-->
-<!--			</exclusions>-->
+			<!--			<exclusions>-->
+			<!--				<exclusion>-->
+			<!--					<groupId>org.springframework.boot</groupId>-->
+			<!--					<artifactId>spring-boot-starter-tomcat</artifactId>-->
+			<!--				</exclusion>-->
+			<!--			</exclusions>-->
 		</dependency>
 		<!-- 引入内嵌的Undertow -->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-undertow</artifactId>-->
-<!--		</dependency>-->
+		<!--		<dependency>-->
+		<!--			<groupId>org.springframework.boot</groupId>-->
+		<!--			<artifactId>spring-boot-starter-undertow</artifactId>-->
+		<!--		</dependency>-->
 		<!-- 引入内嵌的Jetty -->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-jetty</artifactId>-->
-<!--		</dependency>-->
+		<!--		<dependency>-->
+		<!--			<groupId>org.springframework.boot</groupId>-->
+		<!--			<artifactId>spring-boot-starter-jetty</artifactId>-->
+		<!--		</dependency>-->
 		<!-- 配置MyBatis依赖 -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
@@ -100,13 +116,24 @@
 			<version>3.0.4</version>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-configuration-processor</artifactId>-->
-<!--			<version>3.1.5</version>-->
-<!--			<optional>true</optional>-->
-<!--		</dependency>-->
+		<!--		<dependency>-->
+		<!--			<groupId>org.springframework.boot</groupId>-->
+		<!--			<artifactId>spring-boot-configuration-processor</artifactId>-->
+		<!--			<version>3.1.5</version>-->
+		<!--			<optional>true</optional>-->
+		<!--		</dependency>-->
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->
+		<!-- MyBatis-Plus -->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+			<version>3.5.8</version>
+		</dependency>
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-extension</artifactId>
+			<version>3.5.8</version>
+		</dependency>
 		<!-- 配置Redis -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -137,11 +164,11 @@
 			<optional>true</optional>
 		</dependency>
 		<!-- Hibernate Validator -->
-		<dependency>
-			<groupId>org.hibernate.validator</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>6.2.5.Final</version>
-		</dependency>
+		<!--		<dependency>-->
+		<!--			<groupId>org.hibernate.validator</groupId>-->
+		<!--			<artifactId>hibernate-validator</artifactId>-->
+		<!--			<version>6.2.5.Final</version>-->
+		<!--		</dependency>-->
 		<!-- PDF视图渲染 -->
 		<!-- https://mvnrepository.com/artifact/org.xhtmlrenderer/flying-saucer-core -->
 		<dependency>
@@ -183,23 +210,28 @@
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-websocket</artifactId>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>io.undertow</groupId>-->
-<!--			<artifactId>undertow-websockets-jsr</artifactId>-->
-<!--		</dependency>-->
+		<!--		<dependency>-->
+		<!--			<groupId>io.undertow</groupId>-->
+		<!--			<artifactId>undertow-websockets-jsr</artifactId>-->
+		<!--		</dependency>-->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter-test</artifactId>
-			<version>3.0.4</version>
-			<scope>test</scope>
-		</dependency>
 
+		<!-- API Doc依赖库 -->
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.xiaoymin</groupId>
+			<artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+			<version>4.5.0</version>
+		</dependency>
 		<!-- 热部署 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -208,7 +240,6 @@
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -236,6 +267,32 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.1</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+				<executions>
+					<execution>
+						<id>copy-certificate</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/classes/certificate</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/src/main/certs</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

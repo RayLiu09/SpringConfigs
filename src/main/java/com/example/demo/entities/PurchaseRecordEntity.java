@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity(name = "purchaseRecord")
 @Table(name = "T_PURCHASE_RECORD")
-public class PurchaseRecordEntity {
+public class PurchaseRecordEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, columnDefinition = "int(12) COMMENT '主键'")

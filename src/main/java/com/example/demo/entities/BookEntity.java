@@ -4,12 +4,11 @@ import jakarta.persistence.*;
 
 @Entity(name = "book")
 @Table(name = "T_BOOK")
-public class BookEntity {
+public class BookEntity extends BaseEntity {
     // 标明ID，主键策略
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 

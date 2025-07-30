@@ -1,33 +1,32 @@
 package com.example.demo;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-//@Component
-@ConfigurationProperties(prefix = "spring.datasource")
+import javax.sql.DataSource;
+
+//@Configuration
+//@ConfigurationProperties(prefix = "spring.datasource")
 public class DatabaseProperties {
-//    @Value("${driverClassName}")
+    @Value("${driverClassName}")
     private String driverName;
-//    @Value("${url}")
+    @Value("${url}")
     private String url;
+    @Value("${username}")
     private String username = null;
+    @Value("${password}")
     private String password = null;
 
-    public void setDriverName(String driverName) {
-        System.out.println("setDriverName");
-        this.driverName = driverName;
-    }
-    public void setUrl(String url) {
-        System.out.println("setUrl");
-        this.url = url;
-    }
-//    @Value("${username}")
-    public void setUsername(String username) {
-        System.out.println("setUsername");
-        this.username = username;
-    }
-//    @Value("${password}")
-    public void setPassword(String password) {
-        System.out.println("setPassword");
-        this.password = password;
+    @Bean
+    public DataSource initDataSource() {
+        return DataSourceBuilder.create()
+                .driverClassName(driverName)
+                .url(url)
+                .username(username)
+                .password(password)
+                .build();
     }
 }

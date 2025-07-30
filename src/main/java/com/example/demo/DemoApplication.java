@@ -5,6 +5,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
@@ -18,6 +19,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 @PropertySources({
 		@PropertySource("classpath:application.properties"),
 		@PropertySource("classpath:application.jdbc.properties"),
+		@PropertySource("classpath:application-druid.yaml"),
 		@PropertySource("classpath:application.redis.properties"),
 		@PropertySource("classpath:application-mybatis.properties"),
 		@PropertySource("classpath:application-logging.properties"),

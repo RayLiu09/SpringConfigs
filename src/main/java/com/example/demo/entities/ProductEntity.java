@@ -7,7 +7,7 @@ import org.hibernate.annotations.Generated;
 
 @Entity(name = "product")
 @Table(name = "T_PRODUCT")
-public class ProductEntity {
+public class ProductEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, columnDefinition = "int(12)")
