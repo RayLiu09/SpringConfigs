@@ -1,5 +1,6 @@
 package com.example.demo.services.impl;
 
+import com.example.demo.entities.ProductEntity;
 import com.example.demo.models.ProductModel;
 import com.example.demo.models.PurchaseRecordModel;
 import com.example.demo.repositories.ProductRepository;

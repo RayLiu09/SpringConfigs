@@ -34,6 +34,8 @@
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<encoding>UTF-8</encoding>
+		<postgresql.version>42.5.1</postgresql.version>
+		<mssql.version>8.0.27</mssql.version>
 	</properties>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
@@ -42,12 +44,17 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-			<!-- 当使用DBCP2时，需要排除默认引入的HikariCP -->
+			<!-- 当使用DBCP2时，需要排除默认引入的HikariCP数据库连接池组件 -->
 			<exclusions>
 				<!-- 默认引入的HikariCP -->
 				<exclusion>
 					<groupId>com.zaxxer</groupId>
 					<artifactId>HikariCP</artifactId>
+				</exclusion>
+				<!-- 排除Logback  -->
+				<exclusion>
+					<artifactId>spring-boot-starter-logging</artifactId>
+					<groupId>org.springframework.boot</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -63,11 +70,23 @@
 			<version>8.0.33</version>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- 配置PostgreSQL数据库驱动 -->
+<!--		<dependency>-->
+<!--			<groupId>org.postgresql</groupId>-->
+<!--			<artifactId>postgresql</artifactId>-->
+<!--			<version>${postgresql.version}</version>-->
+<!--		</dependency>-->
+		<!-- 配置SQL Server数据库驱动 -->
+<!--		<dependency>-->
+<!--			<groupId>com.microsoft.sqlserver</groupId>-->
+<!--			<artifactId>mssql-jdbc</artifactId>-->
+<!--			<version>${mssql.version}</version>-->
+<!--		</dependency>-->
 		<!--		<dependency>-->
 		<!--			<groupId>org.springframework.boot</groupId>-->
 		<!--			<artifactId>spring-boot-starter-jdbc</artifactId>-->
 		<!--		</dependency>-->
-		<!-- 配置Druid数据源 -->
+		<!-- 配置Druid数据库连接池组件 -->
 		<!-- Spring boot 2.x依赖的Druid -->
 <!--		<dependency>-->
 <!--			<groupId>com.alibaba</groupId>-->
@@ -98,6 +117,13 @@
 			<!--					<artifactId>spring-boot-starter-tomcat</artifactId>-->
 			<!--				</exclusion>-->
 			<!--			</exclusions>-->
+			<!-- 排除Logback日志组件 -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- 引入内嵌的Undertow -->
 		<!--		<dependency>-->
@@ -109,12 +135,17 @@
 		<!--			<groupId>org.springframework.boot</groupId>-->
 		<!--			<artifactId>spring-boot-starter-jetty</artifactId>-->
 		<!--		</dependency>-->
-		<!-- 配置MyBatis依赖 -->
+		<!-- Log4j2 日志记录框架配置 -->
 		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>3.0.4</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
+		<!-- 配置MyBatis依赖 -->
+<!--		<dependency>-->
+<!--			<groupId>org.mybatis.spring.boot</groupId>-->
+<!--			<artifactId>mybatis-spring-boot-starter</artifactId>-->
+<!--			<version>3.0.4</version>-->
+<!--		</dependency>-->
 
 		<!--		<dependency>-->
 		<!--			<groupId>org.springframework.boot</groupId>-->
@@ -124,6 +155,13 @@
 		<!--		</dependency>-->
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->
 		<!-- MyBatis-Plus -->
+		<!-- Spring boot 2.x引入依赖 -->
+<!--		<dependency>-->
+<!--			<groupId>com.baomidou</groupId>-->
+<!--			<artifactId>mybatis-plus-boot-starter</artifactId>-->
+<!--			<version>3.5.8</version>-->
+<!--		</dependency>-->
+		<!-- Spring boot 3.x引入依赖 -->
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-spring-boot3-starter</artifactId>
@@ -222,15 +260,20 @@
 		</dependency>
 
 		<!-- API Doc依赖库 -->
-		<dependency>
-			<groupId>io.swagger</groupId>
-			<artifactId>swagger-annotations</artifactId>
-			<version>1.6.2</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>io.swagger</groupId>-->
+<!--			<artifactId>swagger-annotations</artifactId>-->
+<!--			<version>1.6.2</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>com.github.xiaoymin</groupId>
 			<artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
 			<version>4.5.0</version>
+		</dependency>
+		<!-- 解析yml配置 -->
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
 		</dependency>
 		<!-- 热部署 -->
 		<dependency>
@@ -294,7 +337,26 @@
 					</execution>
 				</executions>
 			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.springdoc</groupId>-->
+<!--				<artifactId>springdoc-openapi-maven-plugin</artifactId>-->
+<!--				<version>last-release-version</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>generate-swagger-docs</id>-->
+<!--						<goals>-->
+<!--							<goal>generate</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
 		</plugins>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
 
 </project>

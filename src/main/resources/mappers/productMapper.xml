@@ -6,7 +6,7 @@
         SELECT * FROM T_PRODUCT
     </select>
     <!-- 根据id查询商品 -->
-    <select id="findById" parameterType="long" resultType="product">
+    <select id="findById" parameterType="long" resultType="com.example.demo.models.ProductModel">
         SELECT * FROM T_PRODUCT WHERE ID = #{id}
     </select>
     <!-- 减少库存 -->

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration status="debug" strict="true" name="log4j2Config" monitorInterval="300">
+    <Properties>
+        <Property name="logPath">./logs</Property>
+    </Properties>
+    <Appenders>
+        <!-- ConsoleAppender -->
+        <!-- name Appender名称 -->
+        <!-- target 枚举型(SYSTEM_OUT, SYSTEM_ERR). 默认 SYSTEM_OUT -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!-- 输出格式 详细配置见下文 -->
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <!-- RollingFileAppender -->
+        <!--  fileName 输出的问题名称, 使用绝对路径确保日志位置的正确性, 并且确保目录有进程用户可写权限  -->
+        <!-- filePattern 日志回滚的文件命名规则 -->
+        <RollingFile name="RollingFile" fileName="${logPath}/app.log" filePattern="${logPath}/bak/app-%{yy-MM-dd HH:mm:ss}.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <!-- name 必填且唯一 -->
+        <!-- level 设置输出最低级别 默认error -->
+        <!-- additivity 是否在父Logger输出, 默认 true -->
+        <!-- 根日志记录器 -->
+        <Root level="INFO">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingFile" />
+            <!-- 根日志记录器输出到控制台和文件 -->
+        </Root>
+
+        <!-- 自定义日志记录器 -->
+        <Logger name="org.springframework" level="INFO" additivity="false">
+            <!--
+                name: 指定日志记录器的名称，可以是包名或类名。
+                level: 指定日志记录器的级别。
+                additivity: 控制是否将日志事件传递给更高级别的父记录器。
+            -->
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingFile" />
+        </Logger>
+
+        <!-- 自定义设置单独Logger日志级别 -->
+        <!--private static final Logger logger = LoggerFactory.getLogger("app");-->
+<!--        <Logger name="app" additivity="false" level="INFO">-->
+<!--            <AppenderRef ref="Console" />-->
+<!--            <AppenderRef ref="RollingFile" />-->
+<!--        </Logger>-->
+    </Loggers>
+</Configuration>
