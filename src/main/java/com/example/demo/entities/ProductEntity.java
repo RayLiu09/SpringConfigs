@@ -12,7 +12,7 @@ public class ProductEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, columnDefinition = "int(12)")
     @Comment("商品编号")
-    private int id;
+    private Integer id;
 
     @Column(name = "product_name", nullable = false, columnDefinition = "varchar(60)")
     @Comment("商品名称")

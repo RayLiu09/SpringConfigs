@@ -12,9 +12,9 @@ public class UserEntiity extends BaseEntity {
     // 标明ID，主键策略
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @TableField(value = "name")
+    @TableField(value = "username")
     @Schema(description = "用户名", example = "admin")
     private String username;
 
@@ -22,7 +22,11 @@ public class UserEntiity extends BaseEntity {
     @Schema(description = "密码", example = "pass@word")
     private String password;
 
-    @TableField(value = "status")
+    @TableField(value = "enabled")
     @Schema(description = "状态", example = "1")
-    private int status;
+    private int enabled;
+
+    @TableField(value = "locked")
+    @Schema(description = "锁定状态", example = "0")
+    private int locked;
 }

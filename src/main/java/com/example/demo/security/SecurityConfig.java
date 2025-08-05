@@ -1,49 +1,62 @@
 package com.example.demo.security;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.example.demo.security.filters.AuditLoggingFilter;
+import com.example.demo.security.filters.RequestHeaderValidatorFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.security.SecureRandom;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
-    @Value("${spring.default-password-encoder}")
-    private String defaultPasswordEncoder;
+    @Autowired
+    private CustomAuthenticationProvider customAuthenticationProvider;
+
     @Bean
-    public UserDetailsService userDetailsService() {
-        return new MyUserDetailsService();
+    public AuthenticationManager authenticationManager() {
+        return new ProviderManager(customAuthenticationProvider);
     }
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .anyRequest().permitAll()
-                .and()
-                .formLogin()
-                .and()
-                .logout()
-                .logoutSuccessUrl("/");
+        final String[] staticResources = new String[]{
+                "/css/**",
+                "/js/**",
+                "/images/**",
+                "/fonts/**",
+                "/webjars/**",
+                "/favicon.ico",
+                "/error",
+                "/swagger-ui.html",
+                "/swagger-ui/**",
+                "/swagger-resources/**",
+                "/v3/api-docs/**",
+                "/actuator/**",
+                "/docs/**",
+                "/api-docs/**",
+                "/.html",
+                "/doc.html",
+                "/druid/**"
+        };
+        http.httpBasic(Customizer.withDefaults()); // 默认的Http Basic认证方式
+        // headers
+        http.headers(c -> c.frameOptions(f -> f.sameOrigin()))
+                .headers(h -> h.contentTypeOptions(c -> c.disable()));
+        http.exceptionHandling(c -> c.authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
+        http.authorizeHttpRequests(c -> {
+            c.requestMatchers(staticResources).permitAll();
+            // 配置白名单endpoints
+            c.requestMatchers("/auth/login", "/auth/logout", "/register").permitAll();
+            c.requestMatchers("/api/**").authenticated();
+        });
+        http.csrf(c -> c.disable());
+        http.logout(c -> c.logoutSuccessUrl("/logout").logoutSuccessHandler(new CustomLogoutSuccessHandler()));
+        http.addFilterBefore(new RequestHeaderValidatorFilter(), BasicAuthenticationFilter.class)
+                .addFilterAfter(new AuditLoggingFilter(), BasicAuthenticationFilter.class).csrf().disable();
         return http.build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        Map<String, PasswordEncoder> encoders = new HashMap<>();
-        encoders.put("noop", NoOpPasswordEncoder.getInstance());
-        encoders.put("bcrypt", new BCryptPasswordEncoder(10, new SecureRandom()));
-        encoders.put("pbkdf2", new Pbkdf2PasswordEncoder("secret", 16, 185000, Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA512));
-
-        return new DelegatingPasswordEncoder(this.defaultPasswordEncoder, encoders);
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Configuration status="debug" strict="true" name="log4j2Config" monitorInterval="300">
     <Properties>
-        <Property name="logPath">./logs</Property>
+        <Property name="logPath">${project.basedir}/logs</Property>
     </Properties>
     <Appenders>
         <!-- ConsoleAppender -->

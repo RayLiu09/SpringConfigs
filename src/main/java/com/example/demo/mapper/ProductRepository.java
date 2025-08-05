@@ -1,4 +1,4 @@
-package com.example.demo.repositories;
+package com.example.demo.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.demo.entities.ProductEntity;

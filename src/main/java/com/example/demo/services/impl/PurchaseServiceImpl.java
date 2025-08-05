@@ -1,10 +1,9 @@
 package com.example.demo.services.impl;
 
-import com.example.demo.entities.ProductEntity;
 import com.example.demo.models.ProductModel;
 import com.example.demo.models.PurchaseRecordModel;
-import com.example.demo.repositories.ProductRepository;
-import com.example.demo.repositories.PurchaseRecordRepository;
+import com.example.demo.mapper.ProductRepository;
+import com.example.demo.mapper.PurchaseRecordRepository;
 import com.example.demo.services.PurchaseService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

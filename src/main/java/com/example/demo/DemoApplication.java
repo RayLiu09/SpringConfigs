@@ -25,7 +25,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 		@PropertySource("classpath:application-logging.properties"),
 		@PropertySource("classpath:application.rabbitmq.properties")
 })
-@MapperScan(value = "com.example.demo.repositories", sqlSessionFactoryRef = "sqlSessionFactory")
+@MapperScan(value = "com.example.demo.mapper", sqlSessionFactoryRef = "sqlSessionFactory")
 @EnableWebSecurity
 @EnableScheduling
 @EnableWebSocket

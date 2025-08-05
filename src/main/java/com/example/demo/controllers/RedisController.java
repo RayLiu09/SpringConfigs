@@ -1,5 +1,8 @@
 package com.example.demo.controllers;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.core.RedisOperations;
@@ -18,6 +21,10 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/redis")
+@Slf4j
+@Tags(value = {
+@Tag(name = "RedisController", description = "Redis接口")
+})
 public class RedisController {
     @Autowired
     private RedisTemplate redisTemplate;

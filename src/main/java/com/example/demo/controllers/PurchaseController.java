@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/product")
 @Slf4j
 @Tag(name = "PurchaseController", description = "商品购买接口")
 public class PurchaseController {
